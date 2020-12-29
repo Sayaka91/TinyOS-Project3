@@ -10,7 +10,7 @@ typedef nx_struct radio_sense_msg {
 } radio_sense_msg_t;
 
 typedef nx_struct radio_combine_msg {
-  radio_sense_msg_t combine_msg[4];
+  radio_sense_msg_t combine_msg[6];
 } radio_combine_msg_t;
 
 enum {

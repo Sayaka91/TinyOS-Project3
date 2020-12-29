@@ -21,8 +21,8 @@ module BaseStationP @safe() {
 implementation
 {
   enum {
-    RADIO_QUEUE_LEN = 12,
-    NUM_COMBINE_PACKET = 4,
+    RADIO_QUEUE_LEN = 6,
+    NUM_COMBINE_PACKET = 6,
   };
   message_t  radioQueueBufs[RADIO_QUEUE_LEN];
   message_t  * ONE_NOK radioQueue[RADIO_QUEUE_LEN];
@@ -180,7 +180,7 @@ implementation
     radio_combine_msg_t* payload;
     radio_sense_msg_t * rsm[NUM_COMBINE_PACKET];
     atomic
-    if (count < 4 || (radioIn == radioOut && !radioFull)){
+    if (count < 6 || (radioIn == radioOut && !radioFull)){
 	  radioBusy = FALSE;
 	  return;
 	  } 
@@ -199,6 +199,8 @@ implementation
     payload->combine_msg[1] = *rsm[1];
     payload->combine_msg[2] = *rsm[2];
     payload->combine_msg[3] = *rsm[3];
+    payload->combine_msg[4] = *rsm[4];
+    payload->combine_msg[5] = *rsm[5];
     if (call RadioSend.send[23](0x0002, &packet, sizeof(radio_combine_msg_t)) == SUCCESS)
       call Leds.led0Toggle();
     else{
@@ -215,7 +217,7 @@ implementation
 	  {
 	    if (radioOut + NUM_COMBINE_PACKET  >= RADIO_QUEUE_LEN)
 	      radioOut = radioOut + NUM_COMBINE_PACKET - RADIO_QUEUE_LEN;
-              count -=4;
+              count -=6;
 
 	    if (radioFull)
 	      radioFull = FALSE;
