@@ -6,7 +6,7 @@ typedef nx_struct radio_sense_msg {
   nx_uint16_t id;
   nx_uint16_t temp;
   nx_uint16_t humi;
-  nx_uint16_1 light;
+  nx_uint16_t light;
 } radio_sense_msg_t;
 
 typedef nx_struct radio_combine_msg {
