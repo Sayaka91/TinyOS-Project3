@@ -58,6 +58,17 @@ implementation {
     else 
       call Leds.led0On();
   }
+  
+   event void HumiSensor.readDone(error_t result, uint16_t val)
+  {
+    if (result == SUCCESS)
+    {
+      Humi = val;  
+      post send();
+    }
+    else 
+      call Leds.led0On();
+  }
 	
   event void LightSensor.readDone(error_t result, uint16_t val)
   {
@@ -68,17 +79,6 @@ implementation {
     else
       call Leds.led0On();
   } 
-
-  event void HumiSensor.readDone(error_t result, uint16_t val)
-  {
-    if (result == SUCCESS)
-    {
-      Humi = val;  
-      post send();
-    }
-    else 
-      call Leds.led0On();
-  }
 
 
   event void AMSend.sendDone(message_t* bufPtr, error_t error) {
