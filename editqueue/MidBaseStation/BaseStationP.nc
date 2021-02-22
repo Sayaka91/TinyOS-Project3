@@ -93,17 +93,7 @@ implementation
       call Leds.led2On();
   }
 	
-  event void LightSensor.readDone(error_t result, uint16_t val)
-  {
-    if (result == SUCCESS)
-    {
-      Light = val;                  		
-    }
-    else 
-      call Leds.led2On();
-  }
-
-  event void HumiSensor.readDone(error_t result, uint16_t val)
+ event void HumiSensor.readDone(error_t result, uint16_t val)
   {
     if (result == SUCCESS)
     {
@@ -113,8 +103,17 @@ implementation
     else 
       call Leds.led2On();
   }
-
   
+  event void LightSensor.readDone(error_t result, uint16_t val)
+  {
+    if (result == SUCCESS)
+    {
+      Light = val;                  		
+    }
+    else 
+      call Leds.led2On();
+  }
+ 
 
   message_t* ONE receive(message_t* ONE msg, void* payload, uint8_t len);
   
@@ -141,6 +140,7 @@ implementation
       rsm->id = ID;
       rsm->temp = Temp;
       rsm->humi = Humi;
+      rsm->light = Light;
     receive(&thisSens, rsm, sizeof(radio_sense_msg_t));
   }
 
